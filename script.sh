@@ -1,27 +1,22 @@
-git clone https://github.com/Skorpion-610/Projet_Technique.git
-
-#Challenge 1 :
+#Challenge 1
 
 sudo apt-get update
 sudo apt-get install ntp -y
 sudo service ntp start
 
 # Partie création filezilla
-sudo apt-get install proftqd -y
 sudo apt-get install vsftpd
-wget "https://www.example.com/?bed=birthday"
 sudo cp vsftpd.conf /etc/vsftpd.conf
 sudo cp vsftpd.chroot_list /etc/vsftpd.chroot_list
 
 # Challenge 4
 
 sudo apt install mariadb-server-10.0 -y
-sudo -i 
-mysql -u root 
+sudo mysql -u root 
 sudo mysql -e "CREATE DATABASE TPFRANCKTHOMAS;"
 sudo mysql -e "GRANT ALL PRIVILEGES ON TPFRANCKTHOMAS.* TO fp IDENTIFIED BY 'fp';"
 
-# Challenge 2-3 :
+# Challenge 2-3
 
 #!/bin/bash
 sudo apt-get install -y python3-pip libglib2.0-dev
