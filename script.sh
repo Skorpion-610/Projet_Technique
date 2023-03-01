@@ -1,3 +1,5 @@
+git clone https://github.com/Skorpion-610/Projet_Technique.git
+
 #Challenge 1
 
 sudo apt-get update
@@ -6,15 +8,8 @@ sudo service ntp start
 
 # Partie création filezilla
 sudo apt-get install vsftpd
-sudo cp vsftpd.conf /etc/vsftpd.conf
-sudo cp vsftpd.chroot_list /etc/vsftpd.chroot_list
-
-# Challenge 4
-
-sudo apt install mariadb-server-10.0 -y
-sudo mysql -u root 
-sudo mysql -e "CREATE DATABASE TPFRANCKTHOMAS;"
-sudo mysql -e "GRANT ALL PRIVILEGES ON TPFRANCKTHOMAS.* TO fp IDENTIFIED BY 'fp';"
+sudo cp Projet_Technique/vsftpd.conf /etc/vsftpd.conf
+sudo cp Projet_Technique/vsftpd.chroot_list /etc/vsftpd.chroot_list
 
 # Challenge 2-3
 
@@ -51,4 +46,9 @@ while True:
                     print(f"L'humidité est de",decimal_int*10**-2,"%")
             print()
 EOF
-sudo python meteo_bluetooth.py
+sudo python meteo_bluetooth.py &
+
+# Challenge 4
+
+sudo apt install mariadb-server-10.0 -y
+sudo mysql -u root -e "CREATE DATABASE TPFRANCKTHOMAS;" -e "GRANT ALL PRIVILEGES ON TPFRANCKTHOMAS.* TO fp IDENTIFIED BY 'fp';"
