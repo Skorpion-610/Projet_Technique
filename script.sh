@@ -24,7 +24,7 @@ sudo python donnees.py &
 #!/bin/bash
 sudo apt-get install -y python3-pip libglib2.0-dev
 sudo pip install bluepy
-sudo pip install mysql.connector
+pip install peewee
 
 cat > meteo_bluetooth.py << EOF
 from bluepy.btle import Scanner
@@ -58,37 +58,31 @@ while True:
                     decimal_int = int(humidite, 16)
                     print(f"L'humidité est de",decimal_int*10**-2,"%")
             print()
-
-utilisateur = os.getlogin();
-# Connection à la base de données MySQL
-conn = mysql.connector.connect(
-    host="127.0.0.1",
-    user="fp",
-    password="fp",
-    database=" TPFRANCKTHOMAS"
-)
-
-cur = conn.cursor()
-
-# Création d'une table si elle n'existe pas
-cur.execute('''CREATE TABLE IF NOT EXISTS TPFRANCKTHOMAS (
-               id INT AUTO_INCREMENT PRIMARY KEY,
-               batterie VARCHAR(255),
-               temperature VARCHAR(255),
-               humidite VARCHAR(255)
-            )''')
-
-# Insérer des données dans la table
-batteries = batterie
-temperatures= temperature
-humidites= humidite
-cur.execute("INSERT INTO TPFRANCKTHOMAS (batteries, temperatures, humidites) VALUES (%s, %s, %s)", (batteries, temperatures, humidites))
-
-# Enregistrer les modifications
-conn.commit()
-
 EOF
 sudo python meteo_bluetooth.py &
+
+cat > peeweeTP.py << EOF
+from peewee import *
+
+# Créer une connexion à la base de données MySQL
+database = MySQLDatabase('TPFRANCKTHOMAS', user='fp', password='fp',host='localhost', port=3306)
+
+# Créer une classe modèle pour chaque table
+class TABLEFP(Model):
+    # Les champs de la table
+    Batterie = FloatField()
+    Temperature = FloatField()
+    Humidite = FloatField()
+    
+    class Meta:
+        database = database
+
+# Créer les tables dans la base de données
+database.connect()
+database.create_tables([TABLEFP])
+EOF
+
+python peeweeTP.py
 
 # challenge 5 
 
