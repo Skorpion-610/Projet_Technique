@@ -14,22 +14,20 @@ sudo cp Projet_Technique/vsftpd.chroot_list /etc/vsftpd.chroot_list
 
 # Challenge 4
 
-pip install peewee
+sudo pip install peewee
 sudo apt install mariadb-server-10.0 -y
 sudo mysql -u root -e "CREATE DATABASE TPFRANCKTHOMAS;" -e "GRANT ALL PRIVILEGES ON TPFRANCKTHOMAS.* TO fp IDENTIFIED BY 'fp';"
-sudo python donnees.py &
 
 # Challenge 2-3
 
 #!/bin/bash
 sudo apt-get install -y python3-pip libglib2.0-dev
 sudo pip install bluepy
-pip install peewee
 
 cat > meteo_bluetooth.py << EOF
 from bluepy.btle import Scanner
+from peeweeTP import Mesure
 
-import mysql.connector
 import os
 
 scanner = Scanner()
@@ -45,41 +43,46 @@ while True:
             )
             print()
             for adtype, description, value in device.getScanData():
-                print(f"Numéro de profil générique :  ({adtype}), Description : {description} = {value}")
-                # print(f"{value[20:22]},{value[24:28]},{value[28:32]}")
-                batterie = value[20:22]
-                temperature = value[24:28]
-                humidite = value[28:32]
-                if adtype == 22 :
-                    decimal_int = int(batterie, 16)
-                    print(f"La batterie est à un niveau de",decimal_int,"%")
-                    decimal_int = int(temperature, 16)
-                    print(f"La température est de",decimal_int*10**-2,"°C")
-                    decimal_int = int(humidite, 16)
-                    print(f"L'humidité est de",decimal_int*10**-2,"%")
+                print(f"Numéro de profil générique : ({adtype}), Description : {description} = {value}")
+                if adtype == 22:
+                    batterie = int(value[20:22], 16)
+                    temperature = int(value[24:28], 16) * 10 ** -2
+                    humidite = int(value[28:32], 16) * 10 ** -2
+                    capteur = device.addr
+                    print(f"La batterie est à un niveau de {batterie}%")
+                    print(f"La température est de {temperature}°C")
+                    print(f"L'humidité est de {humidite}%")
+                    mesure = Mesure.create(batterie=batterie, temperature=temperature, humidite=humidite, capteur=capteur)
             print()
 EOF
 sudo python meteo_bluetooth.py &
 
+sudo pip install pymysql
+
 cat > peeweeTP.py << EOF
 from peewee import *
+from datetime import datetime
 
 # Créer une connexion à la base de données MySQL
 database = MySQLDatabase('TPFRANCKTHOMAS', user='fp', password='fp',host='localhost', port=3306)
 
-# Créer une classe modèle pour chaque table
-class TABLEFP(Model):
-    # Les champs de la table
-    Batterie = FloatField()
-    Temperature = FloatField()
-    Humidite = FloatField()
-    
+# Définition du modèle de table
+class Mesure(Model):
+    id = AutoField()
+    capteur = CharField()
+    batterie = FloatField()
+    temperature = FloatField()
+    humidite = FloatField()
+    date = DateTimeField(default=datetime.now)
+        
     class Meta:
         database = database
 
-# Créer les tables dans la base de données
 database.connect()
-database.create_tables([TABLEFP])
+
+# Créer les tables
+database.create_tables([Mesure])
+
 EOF
 
 python peeweeTP.py
@@ -97,27 +100,39 @@ EOF
 sudo cp home.html templates
 
 cat > script_flask.py << EOF
-from flask import Flask
 from flask import Flask, redirect, url_for, render_template
+from flask import Flask, redirect, url_for, render_template
+from peeweeTP import Mesure
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 
-# Route principale pour afficher la page d'acceuil
+# Route principale pour afficher la page d'accueil
 @app.route('/')
-def hello():
-    return render_template("home.html")
+def home():
+    temperatures = []
+    for mesure in Mesure.select():
+        temperatures.append(mesure.temperature)
 
-# Route secondaire pour afficher la page du capteur
-@app.route('/capteur')
-def capteur():
-    return 'Batterie : / Température : / Humiditée : '
+    capteurs = []
+    for mesure in Mesure.select():
+        capteurs.append(mesure.capteur)
 
-# Bouton pour aller sur la page des informations du capteur
-@app.route("/redirect_to_capteur")
-def redirect_to_capteur():
-    return redirect(url_for("capteur"))
+    batteries = []
+    for mesure in Mesure.select():
+        batteries.append(mesure.batterie)
+
+    humidites = []
+    for mesure in Mesure.select():
+        humidites.append(mesure.humidite)
+
+    dates = []
+    for mesure in Mesure.select():
+        dates.append(mesure.date)
+
+    return render_template('home.html', dates=dates, temperatures=temperatures, capteurs=capteurs, batteries=batteries, humidites=humidites)
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 EOF
 sudo python script_flask.py &
