@@ -12,7 +12,7 @@
         <h1>TP Nolhan-Franck-Thomas</h1>
         <main>
             <table>
-                <tr><td>Temperature</td><td>Batterie</td><td>Humidite</td><td>Capteur</td><td>Date</td></tr>
+                <tr><td class="temperature">Temperature</td><td class="batterie">Batterie</td><td class="humidite">Humidite</td><td class="capteur">Capteur</td><td>Date</td></tr>
                 {% for capteur in data %}
                 <tr><td class="temperature">{{ capteur.temperature}}</td><td class="batterie">{{ capteur.batterie}}</td><td class="humidite">{{
                         capteur.humidite}}</td><td class="capteur">{{ capteur.capteur}}</td><td class="date">{{
