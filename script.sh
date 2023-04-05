@@ -1,4 +1,4 @@
-git clone https://github.com/Skorpion-610/Projet_Technique.git
+git clone https://github.com/Skorpion-610/Projet_Technique.git ~/Projet_Technique
 
 #Challenge 1
 
@@ -11,6 +11,7 @@ sudo systemctl enable ssh.service
 sudo apt-get install vsftpd
 sudo cp Projet_Technique/vsftpd.conf /etc/vsftpd.conf
 sudo cp Projet_Technique/vsftpd.chroot_list /etc/vsftpd.chroot_list
+
 
 # Challenge 4
 
@@ -93,11 +94,9 @@ pip install Flask
 
 mkdir templates
 
-cat > home.html << EOF
-<a href="{{ url_for('redirect_to_capteur') }}" class="btn btn-primary">Afficher les données du capteur</a>
-EOF
-
-sudo cp home.html templates
+cd ~/Projet_Technique/Flask/
+cp home.html ~/templates
+cp static ~/
 
 cat > script_flask.py << EOF
 from flask import Flask, redirect, url_for, render_template
