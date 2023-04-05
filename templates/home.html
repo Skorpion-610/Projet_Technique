@@ -10,34 +10,66 @@
     </head>
     <body>
         <h1>TP Nolhan-Franck-Thomas</h1>
-        <main>
-            <table>
-                <tr><td class="temperature">Temperature</td><td class="batterie">Batterie</td><td class="humidite">Humidite</td><td class="capteur">Capteur</td><td>Date</td></tr>
-                {% for capteur in data %}
-                <tr><td class="temperature">{{ capteur.temperature}}</td><td class="batterie">{{ capteur.batterie}}</td><td class="humidite">{{
-                        capteur.humidite}}</td><td class="capteur">{{ capteur.capteur}}</td><td class="date">{{
-                        capteur.date}}</td></tr>
-                {% endfor %}
-            </table>
-        </main>
-	    <script>
-  // Récupère toutes les cellules de données
-  let cells = document.querySelectorAll('td');
+    <main>
+  	<table>
+    	<tr>
+      		<th><button class="rename-btn" data-column="temperature">Temperature</button></th>
+      		<th><button class="rename-btn" data-column="batterie">Batterie</button></th>
+      		<th><button class="rename-btn" data-column="humidite">Humidite</button></th>
+      		<th><button class="rename-btn" data-column="capteur">Capteur</button></th>
+      		<th>Date</th>
+    	</tr>
+    	{% for capteur in data %}
+    	<tr>
+      		<td class="temperature">{{ capteur.temperature}}</td>
+      		<td class="batterie">{{ capteur.batterie}}</td>
+      		<td class="humidite">{{ capteur.humidite}}</td>
+      		<td class="capteur">{{ capteur.capteur}}</td>
+      		<td class="date">{{ capteur.date}}</td>
+    	</tr>
+    	{% endfor %}
+  	</table>
+  </main>
+// Récupère tous les boutons de renommage
+let renameBtns = document.querySelectorAll('.rename-btn');
 
-  // Pour chaque cellule de données, ajoute un événement de clic
-  cells.forEach(function(cell) {
-    cell.addEventListener('click', function() {
-      // Récupère le nom de la colonne à partir de l'identifiant de la cellule
-      let column = this.parentNode.querySelector('td:first-child').id;
+// Pour chaque bouton de renommage, ajoute un événement de clic
+renameBtns.forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    // Récupère le nom de la colonne à partir des données du bouton
+    let column = this.getAttribute('data-column');
 
-      // Affiche une boîte de dialogue pour renommer la cellule
+    // Récupère toutes les cellules de données de la colonne
+    let cells = document.querySelectorAll('.' + column);
+
+    // Affiche une boîte de dialogue pour renommer chaque cellule
+    cells.forEach(function(cell) {
       let newName = prompt("Entrez un nouveau nom pour la colonne " + column);
       if (newName) {
-        this.textContent = newName;
+        cell.textContent = newName;
       }
     });
+
+    // Stocke les noms des cellules renommées dans le stockage local
+    let cellNames = {};
+    cells.forEach(function(cell) {
+      cellNames[cell.classList[0]] = cell.textContent;
+    });
+    localStorage.setItem('cellNames', JSON.stringify(cellNames));
   });
-</script> 
+});
+
+// Récupère les noms des cellules stockés dans le stockage local et les applique aux cellules correspondantes
+let storedCellNames = JSON.parse(localStorage.getItem('cellNames'));
+if (storedCellNames) {
+  Object.keys(storedCellNames).forEach(function(column) {
+    let cells = document.querySelectorAll('.' + column);
+    cells.forEach(function(cell) {
+      cell.textContent = storedCellNames[column];
+    });
+  });
+}
+
         <footer>
             <h2>Copyright@2023TPNolhan-Franck-Thomas</h2>
             <h3>It's my work don't touch!</h3>
