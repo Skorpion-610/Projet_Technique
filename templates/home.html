@@ -44,7 +44,7 @@
   });
 </script>
 <!--trie des pars capteur et pars date -->
-	 <script>
+<script>
 function sortTableByCapteur() {
     // Récupère le tableau et les lignes de données
     let table = document.querySelector('table');
@@ -75,17 +75,6 @@ function sortTableByCapteur() {
             return 0;
         }
     });
-
-    // Met à jour le tableau HTML avec les données triées
-    for (let i = 1; i < rows.length; i++) {
-        let cells = rows[i].querySelectorAll('td');
-        cells[0].textContent = dataArray[i-1].temperature;
-        cells[1].textContent = dataArray[i-1].batterie;
-        cells[2].textContent = dataArray[i-1].humidite;
-        cells[3].textContent = dataArray[i-1].capteur;
-        cells[4].textContent = dataArray[i-1].date;
-    }
-}
 // Trie le tableau par date
     dataArray.sort(function(a, b) {
         let dateA = a.date.toUpperCase();
