@@ -20,6 +20,23 @@
                 {% endfor %}
             </table>
         </main>
+        <script>
+		const boutonRenomer = document.querySelector('#bouton-renomer');
+
+		boutonRenomer.addEventListener('click', () => {
+			const cellule = document.querySelector('td:nth-child(2)'); // Renomme la deuxième colonne
+
+			const nouveauNom = prompt("Entrez le nouveau nom de la cellule :");
+
+			const colonne = document.querySelectorAll('td:nth-child(2)');
+
+			colonne.forEach((celluleCourante) => {
+				if (celluleCourante.textContent === cellule.textContent) { // Si la cellule a le même contenu que la cellule que vous voulez renommer
+					celluleCourante.textContent = nouveauNom; // Remplacez le contenu de la cellule par le nouveau nom
+				}
+			});
+		});
+	</script>
         <footer>
             <h2>Copyright@2023TPNolhan-Franck-Thomas</h2>
             <h3>It's my work don't touch!</h3>
