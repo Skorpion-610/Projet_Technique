@@ -5,6 +5,9 @@ body {
     line-height: 1.5;
     background-color: #f2f2f2;
 }
+div {
+    text-align: center;
+}
 
 /* Style pour l'en-tête de la page */
 h1 {
