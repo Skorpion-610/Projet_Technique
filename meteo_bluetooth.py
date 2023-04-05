@@ -16,12 +16,13 @@ while True:
             )
             print()
             for adtype, description, value in device.getScanData():
-                print(f"Numéro de profil générique : ({adtype}), Description : {description} = {value}")
-                if adtype == 22:
+                if description == "Complete Local Name":
+                    capteur = value
+                    print(f"Nom du capteur : {capteur}")
+                elif adtype == 22:
                     batterie = int(value[20:22], 16)
                     temperature = int(value[24:28], 16) * 10 ** -2
                     humidite = int(value[28:32], 16) * 10 ** -2
-                    capteur = device.addr
                     print(f"La batterie est à un niveau de {batterie}%")
                     print(f"La température est de {temperature}°C")
                     print(f"L'humidité est de {humidite}%")
