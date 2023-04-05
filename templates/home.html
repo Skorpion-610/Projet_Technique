@@ -13,7 +13,7 @@
 	<div>
 		<!--trie des pars capteur -->
         <button onclick="sortTableByCapteur()">Trier par capteur</button>
-	<button onclick="sortTableByDate()">Trier par capteur</button>
+	<button onclick="sortTableByDate()">Trier par date</button>
     	</div>
         <main>
             <table>
@@ -95,7 +95,7 @@ function sortTableByCapteur() {
 <!-- trie pars date --> 
 </script>
 	 <script>
-function sortTableByCapteur() {
+function sortTableByDate() {
     // Récupère le tableau et les lignes de données
     let table = document.querySelector('table');
     let rows = table.querySelectorAll('tr');
@@ -113,7 +113,7 @@ function sortTableByCapteur() {
         });
     }
 
-    // Trie le tableau par capteur
+    // Trie le tableau par date
     dataArray.sort(function(a, b) {
         let dateA = a.date.toUpperCase();
         let dateB = b.date.toUpperCase();
