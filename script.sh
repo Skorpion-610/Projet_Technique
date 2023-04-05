@@ -18,3 +18,5 @@ sudo python meteo_bluetooth.py &
 
 # Exécution du script flask
 sudo python script_flask.py &
+
+
