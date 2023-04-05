@@ -10,6 +10,10 @@
     </head>
     <body>
         <h1>TP Nolhan-Franck-Thomas</h1>
+	<div>
+		<!--trie des pars capteur -->
+        <button onclick="sortTableByCapteur()">Trier par capteur</button>
+    	</div>
         <main>
             <table>
                 <tr><td class="temperature">Temperature</td><td class="batterie">Batterie</td><td class="humidite">Humidite</td><td class="capteur">Capteur</td><td>Date</td></tr>
@@ -20,10 +24,6 @@
                 {% endfor %}
             </table>
         </main>
-	 <div>
-		<!--trie des pars capteur -->
-        <button onclick="sortTableByCapteur()">Trier par capteur</button>
-    </div>
 	    <!--renomage  -->
 	    <script>
   // Récupère toutes les cellules de données
