@@ -44,7 +44,7 @@
     });
   });
 </script>
-<!--trie des pars capteur -->
+<!--trie des pars capteur et pars date -->
 	 <script>
 function sortTableByCapteur() {
     // Récupère le tableau et les lignes de données
@@ -87,33 +87,7 @@ function sortTableByCapteur() {
         cells[4].textContent = dataArray[i-1].date;
     }
 }
-		 setInterval(function() {
-    // Code pour récupérer les données et mettre à jour le tableau HTML
-}, 300000); //
-
-</script>
-<!-- trie pars date --> 
-</script>
-	 <script>
-function sortTableByDate() {
-    // Récupère le tableau et les lignes de données
-    let table = document.querySelector('table');
-    let rows = table.querySelectorAll('tr');
-
-    // Convertit les lignes de données en tableau
-    let dataArray = [];
-    for (let i = 1; i < rows.length; i++) {
-        let cells = rows[i].querySelectorAll('td');
-        dataArray.push({
-            temperature: cells[0].textContent,
-            batterie: cells[1].textContent,
-            humidite: cells[2].textContent,
-            capteur: cells[3].textContent,
-            date: cells[4].textContent
-        });
-    }
-
-    // Trie le tableau par date
+// Trie le tableau par date
     dataArray.sort(function(a, b) {
         let dateA = a.date.toUpperCase();
         let dateB = b.date.toUpperCase();
@@ -136,6 +110,10 @@ function sortTableByDate() {
         cells[4].textContent = dataArray[i-1].date;
     }
 }
+		 setInterval(function() {
+    // Code pour récupérer les données et mettre à jour le tableau HTML
+}, 300000); //
+
 </script>
         <footer>
             <h2>Copyright@2023TPNolhan-Franck-Thomas</h2>
