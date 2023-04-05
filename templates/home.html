@@ -14,30 +14,30 @@
             <table>
                 <tr><td>Temperature</td><td>Batterie</td><td>Humidite</td><td>Capteur</td><td>Date</td></tr>
                 {% for capteur in data %}
-                <tr><td>{{ capteur.temperature}}</td><td>{{ capteur.batterie}}</td><td>{{
-                        capteur.humidite}}</td><td>{{ capteur.capteur}}</td><td>{{
+                <tr><td class="temperature">{{ capteur.temperature}}</td><td class="batterie">{{ capteur.batterie}}</td><td class="humidite">{{
+                        capteur.humidite}}</td><td class="capteur">{{ capteur.capteur}}</td><td class="date">{{
                         capteur.date}}</td></tr>
                 {% endfor %}
             </table>
         </main>
-	<button onclick="renommer()">Renommer</button>
-        <script>
-		const boutonRenomer = document.querySelector('#bouton-renomer');
+	    <script>
+  // Récupère toutes les cellules de données
+  let cells = document.querySelectorAll('td');
 
-		boutonRenomer.addEventListener('click', () => {
-			const cellule = document.querySelector('td:nth-child(2)'); // Renomme la deuxième colonne
+  // Pour chaque cellule de données, ajoute un événement de clic
+  cells.forEach(function(cell) {
+    cell.addEventListener('click', function() {
+      // Récupère le nom de la colonne à partir de l'identifiant de la cellule
+      let column = this.parentNode.querySelector('td:first-child').id;
 
-			const nouveauNom = prompt("Entrez le nouveau nom de la cellule :");
-
-			const colonne = document.querySelectorAll('td:nth-child(2)');
-
-			colonne.forEach((celluleCourante) => {
-				if (celluleCourante.textContent === cellule.textContent) { // Si la cellule a le même contenu que la cellule que vous voulez renommer
-					celluleCourante.textContent = nouveauNom; // Remplacez le contenu de la cellule par le nouveau nom
-				}
-			});
-		});
-	</script>
+      // Affiche une boîte de dialogue pour renommer la cellule
+      let newName = prompt("Entrez un nouveau nom pour la colonne " + column);
+      if (newName) {
+        this.textContent = newName;
+      }
+    });
+  });
+</script> 
         <footer>
             <h2>Copyright@2023TPNolhan-Franck-Thomas</h2>
             <h3>It's my work don't touch!</h3>
