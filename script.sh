@@ -1,5 +1,3 @@
-git clone https://github.com/Skorpion-610/Projet_Technique.git ~/Projet_Technique
-
 sudo apt-get update
 sudo apt-get install ntp -y
 sudo service ntp start
