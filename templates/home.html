@@ -38,6 +38,54 @@
     });
   });
 </script> 
+	 <script>
+function sortTableByCapteur() {
+    // Récupère le tableau et les lignes de données
+    let table = document.querySelector('table');
+    let rows = table.querySelectorAll('tr');
+
+    // Convertit les lignes de données en tableau
+    let dataArray = [];
+    for (let i = 1; i < rows.length; i++) {
+        let cells = rows[i].querySelectorAll('td');
+        dataArray.push({
+            temperature: cells[0].textContent,
+            batterie: cells[1].textContent,
+            humidite: cells[2].textContent,
+            capteur: cells[3].textContent,
+            date: cells[4].textContent
+        });
+    }
+
+    // Trie le tableau par capteur
+    dataArray.sort(function(a, b) {
+        let capteurA = a.capteur.toUpperCase();
+        let capteurB = b.capteur.toUpperCase();
+        if (capteurA < capteurB) {
+            return -1;
+        } else if (capteurA > capteurB) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+
+    // Met à jour le tableau HTML avec les données triées
+    for (let i = 1; i < rows.length; i++) {
+        let cells = rows[i].querySelectorAll('td');
+        cells[0].textContent = dataArray[i-1].temperature;
+        cells[1].textContent = dataArray[i-1].batterie;
+        cells[2].textContent = dataArray[i-1].humidite;
+        cells[3].textContent = dataArray[i-1].capteur;
+        cells[4].textContent = dataArray[i-1].date;
+    }
+}
+		 setInterval(function() {
+    // Code pour récupérer les données et mettre à jour le tableau HTML
+}, 300000); //
+
+</script>
+
         <footer>
             <h2>Copyright@2023TPNolhan-Franck-Thomas</h2>
             <h3>It's my work don't touch!</h3>
