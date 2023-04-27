@@ -12,7 +12,7 @@
         <h1>TP Nolhan-Franck-Thomas</h1>
 	<div>
 		<!--trie des pars capteur -->
-        <button onclick="sortTable()">Trier par capteur et date</button>
+        <button onclick="sortTableByCapteur()">Trier par capteur et date</button>
     	</div>
         <main>
             <table>
@@ -63,28 +63,24 @@ function sortTableByCapteur() {
         });
     }
 
-    // Trie le tableau par capteur
+    // Trie le tableau par capteur et date
     dataArray.sort(function(a, b) {
         let capteurA = a.capteur.toUpperCase();
         let capteurB = b.capteur.toUpperCase();
+        let dateA = a.date.toUpperCase();
+        let dateB = b.date.toUpperCase();
         if (capteurA < capteurB) {
             return -1;
         } else if (capteurA > capteurB) {
             return 1;
         } else {
-            return 0;
-        }
-    });
-// Trie le tableau par date
-    dataArray.sort(function(a, b) {
-        let dateA = a.date.toUpperCase();
-        let dateB = b.date.toUpperCase();
-        if (dateA < dateB) {
-            return -1;
-        } else if (dateA > dateB) {
-            return 1;
-        } else {
-            return 0;
+            if (dateA < dateB) {
+                return -1;
+            } else if (dateA > dateB) {
+                return 1;
+            } else {
+                return 0;
+            }
         }
     });
 
@@ -98,10 +94,6 @@ function sortTableByCapteur() {
         cells[4].textContent = dataArray[i-1].date;
     }
 }
-		 setInterval(function() {
-    // Code pour récupérer les données et mettre à jour le tableau HTML
-}, 300000); //
-
 </script>
         <footer>
             <h2>Copyright@2023TPNolhan-Franck-Thomas</h2>
