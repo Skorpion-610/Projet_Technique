@@ -22,6 +22,3 @@ sudo python script_flask.py &
 
 # Exécution du script de récupération des données météo publique
 sudo python donnees_meteo.py &
-
-
-
