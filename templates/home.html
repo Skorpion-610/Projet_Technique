@@ -39,6 +39,17 @@
       let newName = prompt("Entrez un nouveau nom pour la colonne " + column);
       if (newName) {
         this.textContent = newName;
+
+        // Récupère le nouveau nom de capteur
+        let newCapteurName = this.textContent;
+
+        // Change le nom de tous les capteurs du même nom
+        let capteurCells = document.querySelectorAll('#capteur-col + td');
+        capteurCells.forEach(function(capteurCell) {
+          if (capteurCell.textContent === column) {
+            capteurCell.textContent = newCapteurName;
+          }
+        });
       }
     });
   });
