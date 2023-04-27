@@ -48,6 +48,14 @@
         capteurCells.forEach(function(capteurCell) {
           if (capteurCell.textContent.trim() === column.trim()) {
             capteurCell.textContent = newCapteurName;
+            if (newCapteurName === "capteur1") {
+              let otherCapteurCells = document.querySelectorAll('#capteur-col + td:not(:first-child)');
+              otherCapteurCells.forEach(function(otherCapteurCell) {
+                if (otherCapteurCell.textContent.trim() === column.trim()) {
+                  otherCapteurCell.textContent = "capteur1";
+                }
+              });
+            }
           }
         });
       }
