@@ -46,7 +46,7 @@
         // Change le nom de tous les capteurs du même nom
         let capteurCells = document.querySelectorAll('#capteur-col + td');
         capteurCells.forEach(function(capteurCell) {
-          if (capteurCell.textContent === column) {
+          if (capteurCell.textContent.trim() === column.trim()) {
             capteurCell.textContent = newCapteurName;
           }
         });
