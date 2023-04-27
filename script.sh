@@ -12,11 +12,16 @@ sudo apt-get install -y python3-pip libglib2.0-dev
 sudo pip install bluepy
 sudo pip install pymysql
 sudo pip install Flask
+sudo pip install requests
 
 # Exécution du script météo
 sudo python meteo_bluetooth.py &
 
 # Exécution du script flask
 sudo python script_flask.py &
+
+# Exécution du script de récupération des données météo publique
+sudo python donnees_meteo.py &
+
 
 
